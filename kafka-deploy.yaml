@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kafka
+  name: kafka
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kafka
+    spec:
+      volumes:
+      - name: kafka-vol
+        persistentVolumeClaim:
+          claimName: kafka-pvc
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      containers:
+      - image: bitnami/kafka
+        name: kafka
+        envFrom:
+        - configMapRef:
+            name: kafka-config
+        ports:
+        - containerPort: 9092
+        resources:
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+        volumeMounts:
+        - name: kafka-vol
+          mountPath: "/bitnami"
+        readinessProbe:
+         tcpSocket:
+           port: 9092
+         initialDelaySeconds: 5
+         periodSeconds: 10
+        livenessProbe:
+         tcpSocket:
+           port: 9092
+         initialDelaySeconds: 15
+         periodSeconds: 20 
+status: {}

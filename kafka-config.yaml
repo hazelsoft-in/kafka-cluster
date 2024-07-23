@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  ALLOW_PLAINTEXT_LISTENER: "yes"
+  KAFKA_BROKER_ID: "1"
+  KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://10.0.16.4:30042
+  KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
+  KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: kafka-config
+  namespace: kafka
