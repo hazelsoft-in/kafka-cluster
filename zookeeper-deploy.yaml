@@ -24,7 +24,7 @@ spec:
       volumes:
       - name: zookeeper-vol
         persistentVolumeClaim:
-          claimName: zookeeper-claim
+          claimName: zookeeper-pvc
       containers:
       - image: bitnami/zookeeper
         name: zookeeper
